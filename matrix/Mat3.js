@@ -23,6 +23,37 @@ class Mat3 extends Mat {
 			super(...val);
 	}
 	
+	static transl(dx=0, dy=0) {
+		return new this(  1,  0, 0,
+		                  0,  1, 0,
+		                 dx, dy, 1 );
+	}
+
+	static scale(sx=1, sy=sx) {
+		return new this( sx,  0, 0,
+		                  0, sy, 0,
+		                  0,  0, 1 );
+	}
+
+	static rot(a) {
+		let [c, s] = [Math.cos(a), Math.sin(a)];
+		return new this(  c, s, 0,
+		                 -s, c, 0,
+		                  0, 0, 1 );
+	}
+
+	static shearX(h) {
+		return new this( 1, h, 0,
+		                 0, 1, 0,
+		                 0, 0, 1 );
+	}
+
+	static shearY(h) {
+		return new this( 1, 0, 0,
+		                 h, 1, 0,
+		                 0, 0, 1 );
+	}
+	
 	col(i) {
 		return new Vec3(this._col(i));
 	}

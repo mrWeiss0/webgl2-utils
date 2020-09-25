@@ -24,6 +24,134 @@ class Mat4 extends Mat {
 			super(...val);
 	}
 	
+	static transl(dx=0, dy=0, dz=0) {
+		if(dx instanceof Vec3) [dx, dy, dz] = dx.val;
+		return new this(  1,  0,  0,  0,
+		                  0,  1,  0,  0,
+		                  0,  0,  1,  0,
+		                 dx, dy, dz,  1 );
+	}
+
+	static scale(sx=1, sy=sx, sz=sy) {
+		return new this( sx,  0,  0, 0,
+		                  0, sy,  0, 0,
+		                  0,  0, sz, 0,
+		                  0,  0,  0, 1 );
+	}
+
+	static rotX(a) {
+		let [c, s] = [Math.cos(a), Math.sin(a)];
+		return new this(  1,  0,  0, 0,
+		                  0,  c,  s, 0,
+		                  0, -s,  c, 0,
+		                  0,  0,  0, 1 );
+	}
+
+	static rotY(a) {
+		let [c, s] = [Math.cos(a), Math.sin(a)];
+		return new this(  c,  0, -s, 0,
+		                  0,  1,  0, 0,
+		                  s,  0,  c, 0,
+		                  0,  0,  0, 1 );
+	}
+
+	static rotZ(a) {
+		let [c, s] = [Math.cos(a), Math.sin(a)];
+		return new this(  c,  s,  0, 0,
+		                 -s,  c,  0, 0,
+		                  0,  0,  1, 0,
+		                  0,  0,  0, 1 );
+	}
+
+	static shearX(hy, hz) {
+		return new this(  1, hy, hz, 0,
+		                  0,  1,  0, 0,
+		                  0,  0,  1, 0,
+		                  0,  0,  0, 1 );
+	}
+
+	static shearY(hx, hz) {
+		return new this(  1,  0,  0, 0,
+		                 hx,  1, hz, 0,
+		                  0,  0,  1, 0,
+		                  0,  0,  0, 1 );
+	}
+
+	static shearZ(hx, hy) {
+		return new this(  1,  0,  0, 0,
+		                  0,  1,  0, 0,
+		                 hx, hy,  1, 0,
+		                  0,  0,  0, 1 );
+	}
+	
+	/*
+	 * Return the orthogonal projection matrix
+	 * from camera space with negative z-axis.
+	 *
+	 * w: half width
+	 * h: half height
+	 * n: near plane
+	 * f: far  plane
+	 */
+	static ortho(w, h, n, f) {
+		return new this( 1/w,   0,           0, 0,
+		                   0, 1/h,           0, 0,
+		                   0,   0,     2/(n-f), 0,
+		                   0,   0, (n+f)/(n-f), 1 );
+	}
+	
+	/*
+	 * Return the perspective projection matrix
+	 * from camera space with negative z-axis.
+	 *
+	 * fov: field of view in radians
+	 * a: aspect ratio
+	 * n: near plane
+	 * f: far  plane
+	 */
+	static persp(fov, a, n, f) {
+		let h = n * Math.tan(fov/2);
+		return this.ortho(a*h, h, n-1/n, n-1/f)
+			.mul(new this( n, 0, 0,  0,
+			               0, n, 0,  0,
+			               0, 0, n, -1,
+			               0, 0, 1,  0 ));
+	}
+	
+	/*
+	 * Return the rotation matrix
+	 * for the given euler angles
+	 * for z-up coordinates (XYZ order)
+	 */
+	static euler(roll, pitch, yaw) {
+		return this.rotZ(yaw)
+			.mul(this.rotY(pitch))
+			.mul(this.rotX(roll));
+	}
+	
+	/*
+	 * Return the transformation matrix for
+	 * point `a` looking at point `o`.
+	 * Invert this matrix to get the corresponding
+	 * view matrix.
+	 *
+	 * c:   Source point
+	 * o:   Look at point
+	 * upv: Upvector
+	 */
+	static lookAt(c, o, upv) {
+		if(Array.isArray(c)) c = new Vec3(c);
+		if(Array.isArray(o)) o = new Vec3(o);
+		if(Array.isArray(upv)) upv = new Vec3(upv);
+		let vz = c.sub(o).normalize();
+		let vx = upv.cross(vz).normalize();
+		let vy = vz.cross(vx).normalize();
+		return new this( vx, 0,
+		                 vy, 0,
+		                 vz, 0,
+		                  c, 1 );
+	}
+
 	col(i) {
 		return new Vec4(this._col(i));
 	}
