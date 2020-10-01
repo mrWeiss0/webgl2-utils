@@ -34,6 +34,8 @@ class Vec extends _Mat {
 	/* Return the normalized vector */
 	normalize() {
 		let m = this.modulo;
+		if(m == 0 || m == 1)
+			return this;
 		return new this.constructor(...this.val.map((e) => e / m));
 	}
 	

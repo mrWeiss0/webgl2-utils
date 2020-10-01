@@ -104,18 +104,36 @@ class Mat4 extends Mat {
 	 * Return the perspective projection matrix
 	 * from camera space with negative z-axis.
 	 *
-	 * fov: field of view in radians
+	 * w: half width  at projection plane
+	 * h: half height at projection plane
+	 * n: near plane
+	 * f: far  plane
+	 * d: projection plane distance
+	 */
+	static persp(w, h, n, f, d = n) {
+		/*return this.ortho(w, h, d-1/n, d-1/f)
+			.mul(new this( d, 0, 0,  0,
+			               0, d, 0,  0,
+			               0, 0, d, -1,
+			               0, 0, 1,  0 ));*/
+		return new this( d/w,   0,           0,  0,
+		                   0, d/h,           0,  0,
+		                   0,   0, (n+f)/(n-f), -1,
+		                   0,   0, 2*f*n/(n-f),  0 );
+	}
+	
+	/*
+	 * Return the perspective projection matrix
+	 * given vertical field of view and aspect ratio.
+	 *
+	 * fov: vertical field of view in radians
 	 * a: aspect ratio
 	 * n: near plane
 	 * f: far  plane
 	 */
-	static persp(fov, a, n, f) {
-		let h = n * Math.tan(fov/2);
-		return this.ortho(a*h, h, n-1/n, n-1/f)
-			.mul(new this( n, 0, 0,  0,
-			               0, n, 0,  0,
-			               0, 0, n, -1,
-			               0, 0, 1,  0 ));
+	static perspFOV(fov, a, n, f) {
+		let h = Math.tan(fov/2);
+		return this.persp(a * h, h, n, f, 1);
 	}
 	
 	/*
@@ -139,13 +157,17 @@ class Mat4 extends Mat {
 	 * o:   Look at point
 	 * upv: Upvector
 	 */
-	static lookAt(c, o, upv) {
+	static lookAt(c, o, upv = new Vec3(0, 1, 0)) {
 		if(Array.isArray(c)) c = new Vec3(c);
 		if(Array.isArray(o)) o = new Vec3(o);
 		if(Array.isArray(upv)) upv = new Vec3(upv);
 		let vz = c.sub(o).normalize();
+		if(!vz.modulo)
+			vz = new Vec3(0, 0, 1);
 		let vx = upv.cross(vz).normalize();
-		let vy = vz.cross(vx).normalize();
+		if(!vx.modulo)
+			vx = new Vec3(1, 0, 0);
+		let vy = vz.cross(vx);
 		return new this( vx, 0,
 		                 vy, 0,
 		                 vz, 0,
