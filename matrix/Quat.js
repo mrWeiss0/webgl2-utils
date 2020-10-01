@@ -37,15 +37,21 @@ class Quat extends Vec4 {
 	}
 	
 	/*
-	 * Return the matrix form of the rotation
+	 * Return the 3x3 matrix form of the rotation
 	 */
-	toMatrix() {
+	toMat3() {
 		let [a, b, c, d] = this.val;
 		let s = this.val.reduce((x, y) => x + y**2, 0);
 		s = s === 0 ? 0 : 2 / s;
-		return new Mat4( 1 - s*(c*c + d*d),     s*(b*c + a*d),     s*(b*d - a*c), 0,
-		                     s*(b*c - a*d), 1 - s*(b*b + d*d),     s*(c*d + a*b), 0,
-		                     s*(b*d + a*c),     s*(c*d - a*b), 1 - s*(b*b + c*c), 0,
-		                                 0,                 0,                 0, 1 );
+		return new Mat3( 1 - s*(c*c + d*d),     s*(b*c + a*d),     s*(b*d - a*c),
+		                     s*(b*c - a*d), 1 - s*(b*b + d*d),     s*(c*d + a*b),
+		                     s*(b*d + a*c),     s*(c*d - a*b), 1 - s*(b*b + c*c) );
+	}
+	
+	/*
+	 * Return the 4x4 matrix form of the rotation
+	 */
+	toMat4() {
+		return new Mat4(this.toMat3());
 	}
 }
