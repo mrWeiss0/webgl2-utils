@@ -9,10 +9,10 @@ export class Mat2 extends Mat {
 		if (val[0] instanceof Mat2)
 			super(...val[0].val);
 		else if (val[0] instanceof Mat) {
-			let _val = [];
+			let tmp = [];
 			for(let i = 0; i < Mat2.n; i++)
-				_val = _val.concat(val[0]._col(i).slice(0, Mat2.n));
-			super(..._val);
+				tmp = tmp.concat(val[0]._col(i).slice(0, Mat2.n));
+			super(...tmp);
 		} else
 			super(...val);
 	}

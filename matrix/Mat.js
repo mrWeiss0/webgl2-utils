@@ -27,7 +27,7 @@ export class Mat extends _Mat {
 		let n = this.constructor.n;
 		if(this.val.length == 1) {
 			let v = this.val[0];
-			this.val = new Array(this.constructor.n**2).fill(0);
+			this._val = new Array(this.constructor.n**2).fill(0);
 			for(let i = 0; i < n; i++)
 				this.val[i*(n+1)] = v;
 		} else if(this.val.length < this.constructor.n**2)

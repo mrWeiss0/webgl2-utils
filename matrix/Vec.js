@@ -19,7 +19,7 @@ export class Vec extends _Mat {
 	constructor(...val) {
 		super(...val);
 		if(this.val.length == 1)
-			this.val = new Array(this.constructor.n).fill(this.val[0]);
+			this._val = new Array(this.constructor.n).fill(this.val[0]);
 		else if(this.val.length < this.constructor.n)
 			throw new Error("Too few components to create " + this.constructor.name);
 		else if(this.val.length > this.constructor.n)
