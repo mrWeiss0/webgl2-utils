@@ -1,6 +1,8 @@
 "use strict";
 
-class Mat2 extends Mat {
+import {Mat, Vec2} from "./index.js";
+
+export class Mat2 extends Mat {
 	static n = 2;
 	
 	constructor(...val) {

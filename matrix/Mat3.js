@@ -1,6 +1,8 @@
 "use strict";
 
-class Mat3 extends Mat {
+import {Mat, Mat2, Mat4, Vec3} from "./index.js";
+
+export class Mat3 extends Mat {
 	static n = 3;
 	
 	constructor(...val) {

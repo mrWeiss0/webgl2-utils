@@ -1,10 +1,13 @@
 "use strict";
+
+import {Mat3, Mat4, Vec3, Vec4} from "./index.js";
+
 /*
  * Quaternion class, extends Vec4
  * overriding multiplication method with
  * the quaternion product.
  */
-class Quat extends Vec4 {
+export class Quat extends Vec4 {
 	/*
 	 * Return a Quaternion that represents
 	 * the rotation of `angle` around `axis`.

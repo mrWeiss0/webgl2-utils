@@ -1,5 +1,7 @@
 "use strict";
 
+import {_Mat, Vec} from "./index.js";
+
 /*
  * Abstract parent class for all matrix classes.
  * Values are stored column major, as in GLSL.
@@ -7,7 +9,7 @@
  * Implements common methods and private
  * helper methods for subclasses.
  */
-class Mat extends _Mat {
+export class Mat extends _Mat {
 	/*
 	 * Create a matrix with the given values,
 	 * similar to GLSL matN constructor.

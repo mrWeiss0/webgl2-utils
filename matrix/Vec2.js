@@ -1,5 +1,7 @@
 "use strict";
 
-class Vec2 extends Vec {
+import {Vec} from "./index.js";
+
+export class Vec2 extends Vec {
 	static n = 2;
 }

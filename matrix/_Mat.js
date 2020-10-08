@@ -1,5 +1,7 @@
 "use strict";
 
+import {Vec} from "./index.js";
+
 /*
  * This class is the abstract parent of the
  * matrix and vector classes and implements
@@ -9,7 +11,7 @@
  * the dimension of the matrix or vector
  * and is used for method implementations
  */
-class _Mat {
+export class _Mat {
 	static n = 0;
 	
 	/*

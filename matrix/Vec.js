@@ -1,12 +1,14 @@
 "use strict";
 
+import {_Mat, Mat} from "./index.js";
+
 /*
  * Abstract parent class for all vector classes.
  *
  * Implements common methods and private
  * helper methods for subclasses.
  */
-class Vec extends _Mat {
+export class Vec extends _Mat {
 	/*
 	 * Create a vector with the given values,
 	 * similar to GLSL matN constructor.

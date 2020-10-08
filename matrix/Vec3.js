@@ -1,6 +1,8 @@
 "use strict";
 
-class Vec3 extends Vec {
+import {Vec} from "./index.js";
+
+export class Vec3 extends Vec {
 	static n = 3;
 	
 	/* Cross product */
