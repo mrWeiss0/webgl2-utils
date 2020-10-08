@@ -13,7 +13,7 @@ import {EventHandler} from "./index.js";
  * context menu showing on contextmenu event.
  */
 export class MouseEventHandler extends EventHandler {
-	constructor(target){
+	constructor(target) {
 		super(target, "click", "dblclick", "auxclick", "mousedown", "mouseup", "mousemove", "contextmenu", "wheel", "mouseenter", "mouseleave");
 		this.register(this);
 		this._hideMenu = false;
@@ -43,9 +43,11 @@ export class MouseEventHandler extends EventHandler {
 	}
 	
 	/* Change the target css property `cursor` */
-	cursor(cur) {
-		this.target.style.cursor = cur;
+	setCursor(cursor) {
+		this.target.style.cursor = cursor;
 	}
+	
+	/* Event listeners */
 	
 	mousedown(e) {
 		this._buttons = e.buttons;

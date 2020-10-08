@@ -1,7 +1,7 @@
 "use strict";
 
 /*
- * Abstract Event Handler
+ * Event Handler
  *
  * This class implements an Observable event handler for different event types.
  * Observers can register to an handler and must implement a method for each
@@ -15,8 +15,16 @@ export class EventHandler {
 		this.types = types;
 		this.target = target;
 		this.observers = new Set();
-		this.enabled = true;
+		this._enabled = true;
 		this._listen();
+	}
+	
+	get enabled() {
+		return this._enabled;
+	}
+	
+	set enabled(en) {
+		this._enabled = !!en;
 	}
 	
 	/* Register observer */

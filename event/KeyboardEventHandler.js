@@ -25,6 +25,8 @@ export class KeyboardEventHandler extends EventHandler {
 		return this._keys.get(code) || false;
 	}
 	
+	/* Event listeners */
+	
 	keydown(e) {
 		this._keys.set(e.code, true);
 	}
