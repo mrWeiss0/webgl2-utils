@@ -1,14 +1,14 @@
 "use strict";
 
-import {_Mat, Mat} from "./index.js";
+import {AbstractMat, Mat} from "./index.js";
 
 /*
- * Abstract parent class for all vector classes.
+ * Parent class for all vector classes.
  *
  * Implements common methods and private
  * helper methods for subclasses.
  */
-export class Vec extends _Mat {
+export class Vec extends AbstractMat {
 	/*
 	 * Create a vector with the given values,
 	 * similar to GLSL matN constructor.
@@ -49,6 +49,10 @@ export class Vec extends _Mat {
 		throw new TypeError("Cannot multiply " + this.constructor.name + " with " + m.constructor.name);
 	}
 	
+	toString() {
+		return "[ " + this.val.map(x => x.toPrecision(3)).join(", ") + " ]";
+	}
+	
 	/* Internal vector per matrix method, return the resulting vector */
 	_mulm(m) {
 		let n = this.constructor.n;
@@ -66,9 +70,5 @@ export class Vec extends _Mat {
 		for(let i = 0; i < n; i++)
 			mult += this.val[i] * v.val[i];
 		return mult;
-	}
-	
-	toString() {
-		return "[ " + this.val.map(x => x.toPrecision(3)).join(", ") + " ]";
 	}
 }

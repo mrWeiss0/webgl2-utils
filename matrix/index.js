@@ -1,6 +1,6 @@
 "use strict";
 
-export {_Mat} from "./_Mat.js";
+export {AbstractMat} from "./AbstractMat.js";
 export {Mat} from "./Mat.js";
 export {Mat2} from "./Mat2.js";
 export {Mat3} from "./Mat3.js";

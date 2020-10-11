@@ -8,17 +8,14 @@ export class Mat2 extends Mat {
 	constructor(...val) {
 		if (val[0] instanceof Mat2)
 			super(...val[0].val);
-		else if (val[0] instanceof Mat) {
-			let tmp = [];
-			for(let i = 0; i < Mat2.n; i++)
-				tmp = tmp.concat(val[0]._col(i).slice(0, Mat2.n));
-			super(...tmp);
-		} else
+		else if (val[0] instanceof Mat)
+			super(...Mat2._valFromMat(val[0]));
+		else
 			super(...val);
 	}
 	
 	col(i) {
-		return new Vec2(this._col(i));
+		return new Vec2(this.arrayCol(i));
 	}
 	
 	get det() {
@@ -29,10 +26,17 @@ export class Mat2 extends Mat {
 		return this._det;
 	}
 	
-	invert() {
+	inverse() {
 		let [a, c, b, d] = this.val;
 		let adj = [ d, -b,
 		           -c,  a ];
-		return this._invert(adj);
+		return this._inverse(adj);
+	}
+	
+	static _valFromMat(m) {
+		let val = [];
+		for(let i = 0; i < Mat2.n; i++)
+			val = val.concat(m.arrayCol(i).slice(0, Mat2.n));
+		return val;
 	}
 }

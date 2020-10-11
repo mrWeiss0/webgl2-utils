@@ -11,7 +11,7 @@ import {Vec} from "./index.js";
  * the dimension of the matrix or vector
  * and is used for method implementations
  */
-export class _Mat {
+export class AbstractMat {
 	static n = 0;
 	
 	/*

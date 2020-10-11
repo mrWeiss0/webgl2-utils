@@ -8,21 +8,11 @@ export class Mat4 extends Mat {
 	constructor(...val) {
 		if (val[0] instanceof Mat4)
 			super(...val[0].val);
-		else if (val[0] instanceof Mat3) {
-			let tmp = [];
-			for(let i = 0; i < Mat3.n; i++) {
-				tmp = tmp.concat(val[0]._col(i));
-				tmp.push(0);
-			}
-			super(...tmp, 0, 0, 0, 1);
-		} else if (val[0] instanceof Mat2) {
-			let tmp = [];
-			for(let i = 0; i < Mat2.n; i++) {
-				tmp = tmp.concat(val[0]._col(i));
-				tmp.push(0, 0);
-			}
-			super(...tmp, 0, 0, 1, 0, 0, 0, 0, 1);
-		} else
+		else if (val[0] instanceof Mat3)
+			super(...Mat4._valFromMat3(val[0]));
+		else if (val[0] instanceof Mat2)
+			super(...Mat4._valFromMat2(val[0]));
+		else
 			super(...val);
 	}
 	
@@ -151,7 +141,7 @@ export class Mat4 extends Mat {
 	
 	/*
 	 * Return the transformation matrix for
-	 * point `a` looking at point `o`.
+	 * point `c` looking at point `o`.
 	 * Invert this matrix to get the corresponding
 	 * view matrix.
 	 *
@@ -177,7 +167,7 @@ export class Mat4 extends Mat {
 	}
 
 	col(i) {
-		return new Vec4(this._col(i));
+		return new Vec4(this.arrayCol(i));
 	}
 	
 	get det() {
@@ -211,7 +201,7 @@ export class Mat4 extends Mat {
 		return this._det;
 	}
 	
-	invert() {
+	inverse() {
 		let m = this.val;
 		let adj = [   m[ 5] * m[10] * m[15]
 		            - m[ 5] * m[14] * m[11]
@@ -314,7 +304,26 @@ export class Mat4 extends Mat {
 			            m[ 4] * adj[ 1] +
 			            m[ 8] * adj[ 2] +
 			            m[12] * adj[ 3];
-		return this._invert(adj);
+		return this._inverse(adj);
 	}
 	
+	static _valFromMat3(m) {
+		let val = [];
+		for(let i = 0; i < Mat3.n; i++) {
+			val = val.concat(m.arrayCol(i));
+			val.push(0);
+		}
+		val.push(0, 0, 0, 1);
+		return val;
+	}
+	
+	static _valFromMat2(m) {
+		let val = [];
+		for(let i = 0; i < Mat2.n; i++) {
+			val = val.concat(m.arrayCol(i));
+			val.push(0, 0);
+		}
+		val.push(0, 0, 1, 0, 0, 0, 0, 1);
+		return val;
+	}
 }

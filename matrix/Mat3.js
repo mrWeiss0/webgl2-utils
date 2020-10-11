@@ -8,20 +8,11 @@ export class Mat3 extends Mat {
 	constructor(...val) {
 		if (val[0] instanceof Mat3)
 			super(...val[0].val);
-		else if (val[0] instanceof Mat4) {
-			let tmp = [];
-			for(let i = 0; i < Mat3.n; i++)
-				tmp = tmp.concat(val[0]._col(i).slice(0, Mat3.n));
-			super(...tmp);
-		}
-		else if (val[0] instanceof Mat2) {
-			let tmp = [];
-			for(let i = 0; i < Mat2.n; i++) {
-				tmp = tmp.concat(val[0]._col(i));
-				tmp.push(0);
-			}
-			super(...tmp, 0, 0, 1);
-		} else
+		else if (val[0] instanceof Mat4)
+			super(...Mat3._valFromMat4(val[0]));
+		else if (val[0] instanceof Mat2)
+			super(...Mat3._valFromMat2(val[0]));
+		else
 			super(...val);
 	}
 	
@@ -57,7 +48,7 @@ export class Mat3 extends Mat {
 	}
 	
 	col(i) {
-		return new Vec3(this._col(i));
+		return new Vec3(this.arrayCol(i));
 	}
 	
 	get det() {
@@ -70,7 +61,7 @@ export class Mat3 extends Mat {
 		return this._det;
 	}
 	
-	invert() {
+	inverse() {
 		let m = this.val;
 		let adj = [ m[4] * m[8] - m[7] * m[5],
 		            m[7] * m[2] - m[1] * m[8],
@@ -85,6 +76,23 @@ export class Mat3 extends Mat {
 			this._det = m[0] * adj[0] +
 			            m[3] * adj[1] +
 			            m[6] * adj[2];
-		return this._invert(adj);
+		return this._inverse(adj);
+	}
+	
+	static _valFromMat4(m) {
+		let val = [];
+		for(let i = 0; i < Mat3.n; i++)
+			val = val.concat(m.arrayCol(i).slice(0, Mat3.n));
+		return val;
+	}
+	
+	static _valFromMat2(m) {
+		let val = [];
+		for(let i = 0; i < Mat2.n; i++) {
+			val = val.concat(m.arrayCol(i));
+			val.push(0);
+		}
+		val.push(0, 0, 1);
+		return val;
 	}
 }

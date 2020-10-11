@@ -1,15 +1,15 @@
 "use strict";
 
-import {_Mat, Vec} from "./index.js";
+import {AbstractMat, Vec} from "./index.js";
 
 /*
- * Abstract parent class for all matrix classes.
+ * Parent class for all matrix classes.
  * Values are stored column major, as in GLSL.
  *
  * Implements common methods and private
  * helper methods for subclasses.
  */
-export class Mat extends _Mat {
+export class Mat extends AbstractMat {
 	/*
 	 * Create a matrix with the given values,
 	 * similar to GLSL matN constructor.
@@ -42,7 +42,7 @@ export class Mat extends _Mat {
 	}
 	
 	/* Return the transposed matrix */
-	transpose() {
+	transposed() {
 		let n = this.constructor.n;
 		let t = new Array(n**2);
 		for(let i = 0; i < n; i++)
@@ -66,13 +66,13 @@ export class Mat extends _Mat {
 	get det() {}
 	
 	/* Return the inverse matrix */
-	invert() {}
+	inverse() {}
 	
 	/* Return the `i`th column as Vector */
 	col(i) {}
 	
 	/* Return the `i`th column as Array */
-	_col(i) {
+	arrayCol(i) {
 		let n = this.constructor.n;
 		if(i >= n)
 			throw new RangeError("Invalid column index for " + this.constructor.name);
@@ -85,6 +85,20 @@ export class Mat extends _Mat {
 		if(m instanceof Vec && m.constructor.n == this.constructor.n)
 			return this._mulv(m);
 		throw new TypeError("Cannot multiply " + this.constructor.name + " with " + m.constructor.name);
+	}
+	
+	toString() {
+		let n = this.constructor.n;
+		let str = "[";
+		for(let i = 0; i < n; i++) {
+			if(i) str += "\n ";
+			for(let j = 0; j < n; j++) {
+				if(j) str += ",";
+				str += " " + this.val[i + j*n].toPrecision(3);
+			}
+		}
+		str += " ]";
+		return str;
 	}
 	
 	/* Internal matrix product method, return the resulting matrix */
@@ -111,7 +125,7 @@ export class Mat extends _Mat {
 	}
 	
 	/* Helper method for inverse matrix */
-	_invert(adj) {
+	_inverse(adj) {
 		if(!this.det)
 			throw new Error("Matrix is not invertible");
 		let idet = 1. / this.det;
@@ -119,18 +133,4 @@ export class Mat extends _Mat {
 			adj[i] = adj[i] * idet;
 		return new this.constructor(...adj);
 	};
-	
-	toString() {
-		let n = this.constructor.n;
-		let str = "[";
-		for(let i = 0; i < n; i++) {
-			if(i) str += "\n ";
-			for(let j = 0; j < n; j++) {
-				if(j) str += ",";
-				str += " " + this.val[i + j*n].toPrecision(3);
-			}
-		}
-		str += " ]";
-		return str;
-	}
 }
