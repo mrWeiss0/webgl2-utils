@@ -2,6 +2,9 @@
 
 import {Mat, Vec2} from "./index.js";
 
+/*
+ * 2x2 matrix class.
+ */
 export class Mat2 extends Mat {
 	static n = 2;
 	

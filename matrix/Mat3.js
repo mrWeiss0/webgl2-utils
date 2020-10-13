@@ -2,6 +2,12 @@
 
 import {Mat, Mat2, Mat4, Vec3} from "./index.js";
 
+/*
+ * 3x3 matrix class.
+ *
+ * Implements static methods for basic
+ * 2D transform matrices.
+ */
 export class Mat3 extends Mat {
 	static n = 3;
 	
@@ -16,18 +22,21 @@ export class Mat3 extends Mat {
 			super(...val);
 	}
 	
+	/* 2D translation */
 	static transl(dx=0, dy=0) {
 		return new this(  1,  0, 0,
 		                  0,  1, 0,
 		                 dx, dy, 1 );
 	}
 
+	/* 2D scale */
 	static scale(sx=1, sy=sx) {
 		return new this( sx,  0, 0,
 		                  0, sy, 0,
 		                  0,  0, 1 );
 	}
 
+	/* 2D rotation */
 	static rot(a) {
 		let [c, s] = [Math.cos(a), Math.sin(a)];
 		return new this(  c, s, 0,
@@ -35,12 +44,14 @@ export class Mat3 extends Mat {
 		                  0, 0, 1 );
 	}
 
+	/* 2D shear of the X axis */
 	static shearX(h) {
 		return new this( 1, h, 0,
 		                 0, 1, 0,
 		                 0, 0, 1 );
 	}
 
+	/* 2D shear of the Y axis */
 	static shearY(h) {
 		return new this( 1, 0, 0,
 		                 h, 1, 0,

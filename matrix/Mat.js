@@ -14,13 +14,13 @@ export class Mat extends AbstractMat {
 	 * Create a matrix with the given values,
 	 * similar to GLSL matN constructor.
 	 * Values can be a column major list of
-	 * Scalars, Vectors or Arrays, or another Matrix.
+	 * scalars, vectors or arrays, or another matrix.
 	 *
-	 * If another Matrix is given
+	 * If another matrix is given
 	 * the values are copied to the output;
-	 * any values not filled in are the identity matrix.
+	 * any values not filled in are copied from the identity matrix.
 	 *
-	 * A single value creates a diagonal Matrix.
+	 * Passing a single value creates a diagonal Matrix.
 	 */
 	constructor(...val) {
 		super(...val);
@@ -51,7 +51,10 @@ export class Mat extends AbstractMat {
 		return new this.constructor(...t);
 	}
 	
-	/* Return the trace of the matrix */
+	/* Return the inverse matrix */
+	inverse() {}
+	
+	/* Trace of the matrix */
 	get trace() {
 		if(this._trace == null) {
 			let n = this.constructor.n;
@@ -62,16 +65,13 @@ export class Mat extends AbstractMat {
 		return this._trace;
 	}
 	
-	/* Return the determinant of the matrix */
+	/* Determinant of the matrix */
 	get det() {}
 	
-	/* Return the inverse matrix */
-	inverse() {}
-	
-	/* Return the `i`th column as Vector */
+	/* Return the i-th column as a VecN */
 	col(i) {}
 	
-	/* Return the `i`th column as Array */
+	/* Return the `i`th column as an array */
 	arrayCol(i) {
 		let n = this.constructor.n;
 		if(i >= n)
@@ -87,6 +87,7 @@ export class Mat extends AbstractMat {
 		throw new TypeError("Cannot multiply " + this.constructor.name + " with " + m.constructor.name);
 	}
 	
+	/* String representation of the matrix, row major order */
 	toString() {
 		let n = this.constructor.n;
 		let str = "[";

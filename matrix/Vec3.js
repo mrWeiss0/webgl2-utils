@@ -2,6 +2,9 @@
 
 import {Vec} from "./index.js";
 
+/*
+ * 3 elements vector class.
+ */
 export class Vec3 extends Vec {
 	static n = 3;
 	

@@ -2,6 +2,12 @@
 
 import {Mat, Mat2, Mat3, Vec3, Vec4} from "./index.js";
 
+/*
+ * 4x4 matrix class.
+ *
+ * Implements static methods for
+ * 3D transform and projection matrices.
+ */
 export class Mat4 extends Mat {
 	static n = 4;
 	
@@ -16,6 +22,7 @@ export class Mat4 extends Mat {
 			super(...val);
 	}
 	
+	/* 3D translation */
 	static transl(dx=0, dy=0, dz=0) {
 		if(dx instanceof Vec3) [dx, dy, dz] = dx.val;
 		return new this(  1,  0,  0,  0,
@@ -24,6 +31,7 @@ export class Mat4 extends Mat {
 		                 dx, dy, dz,  1 );
 	}
 
+	/* 3D scale */
 	static scale(sx=1, sy=sx, sz=sy) {
 		return new this( sx,  0,  0, 0,
 		                  0, sy,  0, 0,
@@ -31,6 +39,7 @@ export class Mat4 extends Mat {
 		                  0,  0,  0, 1 );
 	}
 
+	/* 3D translation around X axis */
 	static rotX(a) {
 		let [c, s] = [Math.cos(a), Math.sin(a)];
 		return new this(  1,  0,  0, 0,
@@ -39,6 +48,7 @@ export class Mat4 extends Mat {
 		                  0,  0,  0, 1 );
 	}
 
+	/* 3D translation around Y axis */
 	static rotY(a) {
 		let [c, s] = [Math.cos(a), Math.sin(a)];
 		return new this(  c,  0, -s, 0,
@@ -47,6 +57,7 @@ export class Mat4 extends Mat {
 		                  0,  0,  0, 1 );
 	}
 
+	/* 3D translation around Z axis */
 	static rotZ(a) {
 		let [c, s] = [Math.cos(a), Math.sin(a)];
 		return new this(  c,  s,  0, 0,
@@ -55,6 +66,7 @@ export class Mat4 extends Mat {
 		                  0,  0,  0, 1 );
 	}
 
+	/* 3D shear of the X axis */
 	static shearX(hy, hz) {
 		return new this(  1, hy, hz, 0,
 		                  0,  1,  0, 0,
@@ -62,6 +74,7 @@ export class Mat4 extends Mat {
 		                  0,  0,  0, 1 );
 	}
 
+	/* 3D shear of the Y axis */
 	static shearY(hx, hz) {
 		return new this(  1,  0,  0, 0,
 		                 hx,  1, hz, 0,
@@ -69,6 +82,7 @@ export class Mat4 extends Mat {
 		                  0,  0,  0, 1 );
 	}
 
+	/* 3D shear of the Z axis */
 	static shearZ(hx, hy) {
 		return new this(  1,  0,  0, 0,
 		                  0,  1,  0, 0,
@@ -78,12 +92,12 @@ export class Mat4 extends Mat {
 	
 	/*
 	 * Return the orthogonal projection matrix
-	 * from camera space with negative z-axis.
+	 * from a camera space looking towards negative z-axis.
 	 *
-	 * w: half width
-	 * h: half height
-	 * n: near plane
-	 * f: far  plane
+	 * `w`: half width
+	 * `h`: half height
+	 * `n`: near plane
+	 * `f`: far  plane
 	 */
 	static ortho(w, h, n, f) {
 		return new this( 1/w,   0,           0, 0,
@@ -94,13 +108,13 @@ export class Mat4 extends Mat {
 	
 	/*
 	 * Return the perspective projection matrix
-	 * from camera space with negative z-axis.
+	 * from camera space looking towards negative z-axis.
 	 *
-	 * w: half width  at projection plane
-	 * h: half height at projection plane
-	 * n: near plane
-	 * f: far  plane
-	 * d: projection plane distance
+	 * `w`: half width  at projection plane
+	 * `h`: half height at projection plane
+	 * `n`: near plane
+	 * `f`: far  plane
+	 * `d`: projection plane distance
 	 */
 	static persp(w, h, n, f, d = n) {
 		/*return this.ortho(w, h, d-1/n, d-1/f)
@@ -116,12 +130,13 @@ export class Mat4 extends Mat {
 	
 	/*
 	 * Return the perspective projection matrix
-	 * given vertical field of view and aspect ratio.
+	 * from camera space looking towards negative z-axis,
+	 * given vertical fov and aspect ratio.
 	 *
-	 * fov: vertical field of view in radians
-	 * a: aspect ratio
-	 * n: near plane
-	 * f: far  plane
+	 * `fov`: vertical field of view in radians
+	 * `a`:   aspect ratio
+	 * `n`:   near plane
+	 * `f`:   far  plane
 	 */
 	static perspFOV(fov, a, n, f) {
 		let h = Math.tan(fov/2);
@@ -145,9 +160,9 @@ export class Mat4 extends Mat {
 	 * Invert this matrix to get the corresponding
 	 * view matrix.
 	 *
-	 * c:   Source point
-	 * o:   Look at point
-	 * upv: Upvector
+	 * c:   source point
+	 * o:   look at point
+	 * upv: upvector
 	 */
 	static lookAt(c, o, upv = new Vec3(0, 1, 0)) {
 		if(Array.isArray(c)) c = new Vec3(c);

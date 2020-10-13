@@ -3,16 +3,17 @@
 import {Mat3, Mat4, Vec3, Vec4} from "./index.js";
 
 /*
- * Quaternion class, extends Vec4
- * overriding multiplication method with
- * the quaternion product.
+ * Quaternion class.
+ * Overrides the multiplication method with the quaternion product.
+ * Implements static methods for creating a quaternion from rotations
+ * and methods for converting a quaternion to the corresponding rotation matrix.
  */
 export class Quat extends Vec4 {
 	/*
 	 * Return a Quaternion that represents
 	 * the rotation of `angle` around `axis`.
 	 *
-	 * `axis` can be an Array or a Vec3
+	 * `axis` can be an array or a Vec3
 	 * with the components of the axis direction.
 	 */
 	static fromAngleAxis(a, axis) {
@@ -27,7 +28,7 @@ export class Quat extends Vec4 {
 	}
 	
 	/*
-	 * Return the product of two Quaternions
+	 * Return the product of two quaternions
 	 */
 	mul(q) {
 		if(!(q instanceof this.constructor))
@@ -40,7 +41,7 @@ export class Quat extends Vec4 {
 	}
 	
 	/*
-	 * Return the 3x3 matrix form of the rotation
+	 * Return the 3x3 rotation matrix of the quaternion
 	 */
 	toMat3() {
 		let [a, b, c, d] = this.val;
@@ -52,7 +53,7 @@ export class Quat extends Vec4 {
 	}
 	
 	/*
-	 * Return the 4x4 matrix form of the rotation
+	 * Return the 4x4 rotation matrix of the quaternion
 	 */
 	toMat4() {
 		return new Mat4(this.toMat3());

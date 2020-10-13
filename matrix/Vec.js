@@ -12,7 +12,7 @@ export class Vec extends AbstractMat {
 	/*
 	 * Create a vector with the given values,
 	 * similar to GLSL matN constructor.
-	 * Values can be a list of Scalars, Vectors or Arrays.
+	 * Values can be a list of scalars, vectors or arrays.
 	 *
 	 * A single value creates a vector filled with that value.
 	 */
@@ -26,14 +26,14 @@ export class Vec extends AbstractMat {
 			throw new Error("Too many components to create " + this.constructor.name);
 	}
 	
-	/* Return the modulo of the vector */
+	/* Modulo of the vector */
 	get modulo() {
 		if(this._modulo == null)
 			this._modulo = Math.sqrt(this.val.reduce((x, y) => x + y**2, 0));
 		return this._modulo;
 	}
 	
-	/* Return the normalized vector */
+	/* Return a new vector obtained normalizing the current vector */
 	normalize() {
 		let m = this.modulo;
 		if(m == 0 || m == 1)
@@ -49,6 +49,7 @@ export class Vec extends AbstractMat {
 		throw new TypeError("Cannot multiply " + this.constructor.name + " with " + m.constructor.name);
 	}
 	
+	/* String representation of the vector */
 	toString() {
 		return "[ " + this.val.map(x => x.toPrecision(3)).join(", ") + " ]";
 	}

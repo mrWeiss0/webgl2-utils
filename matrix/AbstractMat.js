@@ -16,7 +16,7 @@ export class AbstractMat {
 	
 	/*
 	 * Create an instance with the values
-	 * given as a sequence of Scalars, Arrays or Vectors
+	 * given as a sequence of scalars, arrays or vectors
 	 */
 	constructor(...val) {
 		this._val = (Array.isArray(val[0]) ? val[0] : val)
@@ -33,14 +33,14 @@ export class AbstractMat {
 		return this._val;
 	}
 	
-	/* Component wise add */
+	/* Component wise addition */
 	add(m) {
 		if(!(m instanceof this.constructor))
 			throw new TypeError("Cannot add " + this.constructor.name + " with " + m.constructor.name);
 		return new this.constructor(...this.val.map((e, i) => e + m.val[i]));
 	}
 	
-	/* Component wise sub */
+	/* Component wise subtraction */
 	sub(m) {
 		if(!(m instanceof this.constructor))
 			throw new TypeError("Cannot subtract " + this.constructor.name + " with " + m.constructor.name);
@@ -56,6 +56,6 @@ export class AbstractMat {
 		return new this.constructor(...this.val.map((e, i) => e * m.val[i]));
 	}
 	
-	/* Return the matrix product of two matrices, matrix per vector, or vector dot product */
+	/* Matrix product of two matrices, matrix per vector, or vector dot product */
 	mul() {}
 }
