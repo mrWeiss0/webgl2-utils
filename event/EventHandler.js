@@ -1,15 +1,13 @@
 "use strict";
 
 /*
- * Event Handler
- *
  * This class implements an Observable event handler for different event types.
  * Observers can register to an handler and must implement a method for each
  * type of event they want to observe, with the name of the event type.
  */
 export class EventHandler {
 	/*
-	 * Creates an instance listening to events on `target`
+	 * Creates an instance listening on `target` to events of the given `types`
 	 */
 	constructor(target, ...types) {
 		this.types = types;
@@ -19,20 +17,25 @@ export class EventHandler {
 		this._listen();
 	}
 	
+	/*
+	 * If it's true the instance is listening to events and will notify observer,
+	 * otherwise incoming events are ignored
+	 */
 	get enabled() {
 		return this._enabled;
 	}
 	
+	/* Set the enabled flag */
 	set enabled(en) {
 		this._enabled = !!en;
 	}
 	
-	/* Register observer */
+	/* Register an observer */
 	register(ob) {
 		this.observers.add(ob);
 	}
 	
-	/* Unregister observer */
+	/* Unregister the observer if it was previously registered */
 	unregister(ob) {
 		this.observers.delete(ob);
 	}
