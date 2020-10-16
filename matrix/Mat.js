@@ -52,7 +52,19 @@ export class Mat extends AbstractMat {
 	}
 	
 	/* Return the inverse matrix */
-	inverse() {}
+	inverse() {
+		let n = this.constructor.n;
+		let adj = this.adjugate();
+		if(!this.det)
+			throw new Error("Matrix is not invertible");
+		let idet = 1. / this.det;
+		for(let i = 0; i < n**2; i++)
+			adj._val[i] = adj.val[i] * idet;
+		return adj;
+	}
+	
+	/* Return the adjugate matrix */
+	adjugate() {}
 	
 	/* Trace of the matrix */
 	get trace() {
@@ -124,14 +136,4 @@ export class Mat extends AbstractMat {
 				mult[i] += this.val[i + j*n] * v.val[j];
 		return new v.constructor(...mult);
 	}
-	
-	/* Helper method for inverse matrix */
-	_inverse(adj) {
-		if(!this.det)
-			throw new Error("Matrix is not invertible");
-		let idet = 1. / this.det;
-		for(let i = 0; i < adj.length; i++)
-			adj[i] = adj[i] * idet;
-		return new this.constructor(...adj);
-	};
 }

@@ -216,7 +216,7 @@ export class Mat4 extends Mat {
 		return this._det;
 	}
 	
-	inverse() {
+	adjugate() {
 		let m = this.val;
 		let adj = [   m[ 5] * m[10] * m[15]
 		            - m[ 5] * m[14] * m[11]
@@ -319,7 +319,7 @@ export class Mat4 extends Mat {
 			            m[ 4] * adj[ 1] +
 			            m[ 8] * adj[ 2] +
 			            m[12] * adj[ 3];
-		return this._inverse(adj);
+		return new this.constructor(adj);
 	}
 	
 	static _valFromMat3(m) {

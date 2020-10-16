@@ -29,11 +29,9 @@ export class Mat2 extends Mat {
 		return this._det;
 	}
 	
-	inverse() {
+	adjugate() {
 		let [a, c, b, d] = this.val;
-		let adj = [ d, -b,
-		           -c,  a ];
-		return this._inverse(adj);
+		return new this.constructor(d, -b, -c, a);
 	}
 	
 	static _valFromMat(m) {

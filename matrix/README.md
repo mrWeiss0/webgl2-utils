@@ -52,6 +52,7 @@ helper methods for subclasses.
 | `arrayCol(i)` | Return the _i_-th column as an array |
 | `transposed()` | Return the transposed matrix |
 | `inverse()` | Return the inverse matrix |
+| `adjugate()` | Return the adjugate matrix |
 | `toString()` | String representation of the matrix, row major order |
 
 `class Mat2 extends Mat`
