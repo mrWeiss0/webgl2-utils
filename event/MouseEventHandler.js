@@ -1,5 +1,3 @@
-"use strict";
-
 import {EventHandler} from "./index.js";
 
 /*

@@ -1,5 +1,3 @@
-"use strict";
-
 /*
  * This class implements an Observable event handler for different event types.
  * Observers can register to an handler and must implement a method for each

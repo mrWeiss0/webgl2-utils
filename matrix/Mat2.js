@@ -1,5 +1,3 @@
-"use strict";
-
 import {Mat, Vec2} from "./index.js";
 
 /*

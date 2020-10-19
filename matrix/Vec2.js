@@ -1,5 +1,3 @@
-"use strict";
-
 import {Vec} from "./index.js";
 
 /*
