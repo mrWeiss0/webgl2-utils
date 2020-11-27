@@ -45,7 +45,7 @@ export class EventHandler {
 	 */
 	handleEvent(event) {
 		if(this.enabled)
-			for(let ob of this.observers) {
+			for(const ob of this.observers) {
 				if(ob[event.type] != null)
 					ob[event.type](event);
 			}
@@ -53,13 +53,13 @@ export class EventHandler {
 
 	/* Add all event listeners for this handler */
 	_listen() {
-		for(let type of this.types)
+		for(const type of this.types)
 			this.target.addEventListener(type, this);
 	}
 
 	/* Remove all event listeners for this handler */
 	_unlisten() {
-		for(let type of this.types)
+		for(const type of this.types)
 			this.target.removeEventListener(type, this);
 	}
 }

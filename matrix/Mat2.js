@@ -21,21 +21,21 @@ export class Mat2 extends Mat {
 	
 	get det() {
 		if(this._det == null) {
-			let [a, c, b, d] = this.val;
+			const [a, c, b, d] = this.val;
 			this._det = a*d - b*c;
 		}
 		return this._det;
 	}
 	
 	adjugate() {
-		let [a, c, b, d] = this.val;
+		const [a, c, b, d] = this.val;
 		return new this.constructor(d, -b, -c, a);
 	}
 	
 	static _valFromMat(m) {
-		let val = [];
+		const val = [];
 		for(let i = 0; i < Mat2.n; i++)
-			val = val.concat(m.arrayCol(i).slice(0, Mat2.n));
+			val.push(...m.arrayCol(i).slice(0, Mat2.n));
 		return val;
 	}
 }

@@ -33,7 +33,7 @@ export class Vec extends AbstractMat {
 	
 	/* Return a new vector obtained normalizing the current vector */
 	normalize() {
-		let m = this.modulo;
+		const m = this.modulo;
 		if(m == 0 || m == 1)
 			return this;
 		return new this.constructor(...this.val.map((e) => e / m));
@@ -54,8 +54,8 @@ export class Vec extends AbstractMat {
 	
 	/* Internal vector per matrix method, return the resulting vector */
 	_mulm(m) {
-		let n = this.constructor.n;
-		let mult = new Array(n).fill(0);
+		const n = this.constructor.n;
+		const mult = new Array(n).fill(0);
 		for(let i = 0; i < n; i++)
 			for(let j = 0; j < n; j++)
 				mult[i] += this.val[j] * m.val[i*n + j];
@@ -64,8 +64,8 @@ export class Vec extends AbstractMat {
 	
 	/* Internal vector dot product method, return the resulting scalar */
 	_mulv(v) {
-		let n = this.constructor.n;
-		let mult = 0;
+		const n = this.constructor.n;
+		const mult = 0;
 		for(let i = 0; i < n; i++)
 			mult += this.val[i] * v.val[i];
 		return mult;

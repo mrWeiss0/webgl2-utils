@@ -36,7 +36,7 @@ export class Mat3 extends Mat {
 
 	/* 2D rotation */
 	static rot(a) {
-		let [c, s] = [Math.cos(a), Math.sin(a)];
+		const [c, s] = [Math.cos(a), Math.sin(a)];
 		return new this(  c, s, 0,
 		                 -s, c, 0,
 		                  0, 0, 1 );
@@ -62,7 +62,7 @@ export class Mat3 extends Mat {
 	
 	get det() {
 		if(this._det == null) {
-			let m = this.val;
+			const m = this.val;
 			this._det = m[0] * (m[4] * m[8] - m[7] * m[5]) +
 			            m[3] * (m[7] * m[2] - m[1] * m[8]) +
 			            m[6] * (m[1] * m[5] - m[4] * m[2]);
@@ -71,16 +71,16 @@ export class Mat3 extends Mat {
 	}
 	
 	adjugate() {
-		let m = this.val;
-		let adj = [ m[4] * m[8] - m[7] * m[5],
-		            m[7] * m[2] - m[1] * m[8],
-		            m[1] * m[5] - m[4] * m[2],
-		            m[6] * m[5] - m[3] * m[8],
-		            m[0] * m[8] - m[6] * m[2],
-		            m[3] * m[2] - m[0] * m[5],
-		            m[3] * m[7] - m[6] * m[4],
-		            m[6] * m[1] - m[0] * m[7],
-		            m[0] * m[4] - m[3] * m[1] ];
+		const m = this.val;
+		const adj = [ m[4] * m[8] - m[7] * m[5],
+		              m[7] * m[2] - m[1] * m[8],
+		              m[1] * m[5] - m[4] * m[2],
+		              m[6] * m[5] - m[3] * m[8],
+		              m[0] * m[8] - m[6] * m[2],
+		              m[3] * m[2] - m[0] * m[5],
+		              m[3] * m[7] - m[6] * m[4],
+		              m[6] * m[1] - m[0] * m[7],
+		              m[0] * m[4] - m[3] * m[1] ];
 		if(this._det == null)
 			this._det = m[0] * adj[0] +
 			            m[3] * adj[1] +
@@ -89,18 +89,16 @@ export class Mat3 extends Mat {
 	}
 	
 	static _valFromMat4(m) {
-		let val = [];
+		const val = [];
 		for(let i = 0; i < Mat3.n; i++)
-			val = val.concat(m.arrayCol(i).slice(0, Mat3.n));
+			val.push(...m.arrayCol(i).slice(0, Mat3.n));
 		return val;
 	}
 	
 	static _valFromMat2(m) {
-		let val = [];
-		for(let i = 0; i < Mat2.n; i++) {
-			val = val.concat(m.arrayCol(i));
-			val.push(0);
-		}
+		const val = [];
+		for(let i = 0; i < Mat2.n; i++)
+			val.push(...m.arrayCol(i), 0);
 		val.push(0, 0, 1);
 		return val;
 	}

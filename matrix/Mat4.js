@@ -39,7 +39,7 @@ export class Mat4 extends Mat {
 
 	/* 3D translation around X axis */
 	static rotX(a) {
-		let [c, s] = [Math.cos(a), Math.sin(a)];
+		const [c, s] = [Math.cos(a), Math.sin(a)];
 		return new this(  1,  0,  0, 0,
 		                  0,  c,  s, 0,
 		                  0, -s,  c, 0,
@@ -48,7 +48,7 @@ export class Mat4 extends Mat {
 
 	/* 3D translation around Y axis */
 	static rotY(a) {
-		let [c, s] = [Math.cos(a), Math.sin(a)];
+		const [c, s] = [Math.cos(a), Math.sin(a)];
 		return new this(  c,  0, -s, 0,
 		                  0,  1,  0, 0,
 		                  s,  0,  c, 0,
@@ -57,7 +57,7 @@ export class Mat4 extends Mat {
 
 	/* 3D translation around Z axis */
 	static rotZ(a) {
-		let [c, s] = [Math.cos(a), Math.sin(a)];
+		const [c, s] = [Math.cos(a), Math.sin(a)];
 		return new this(  c,  s,  0, 0,
 		                 -s,  c,  0, 0,
 		                  0,  0,  1, 0,
@@ -137,7 +137,7 @@ export class Mat4 extends Mat {
 	 * `f`:   far  plane
 	 */
 	static perspFOV(fov, a, n, f) {
-		let h = Math.tan(fov/2);
+		const h = Math.tan(fov/2);
 		return this.persp(a * h, h, n, f, 1);
 	}
 	
@@ -172,7 +172,7 @@ export class Mat4 extends Mat {
 		let vx = upv.cross(vz).normalize();
 		if(!vx.modulo)
 			vx = new Vec3(1, 0, 0);
-		let vy = vz.cross(vx);
+		const vy = vz.cross(vx);
 		return new this( vx, 0,
 		                 vy, 0,
 		                 vz, 0,
@@ -185,7 +185,7 @@ export class Mat4 extends Mat {
 	
 	get det() {
 		if(this._det == null) {
-			let m = this.val;
+			const m = this.val;
 			this._det = m[ 0] * (  m[ 5] * m[10] * m[15]
 			                     - m[ 5] * m[14] * m[11]
 			                     - m[ 6] * m[ 9] * m[15]
@@ -215,8 +215,8 @@ export class Mat4 extends Mat {
 	}
 	
 	adjugate() {
-		let m = this.val;
-		let adj = [   m[ 5] * m[10] * m[15]
+		const m = this.val;
+		const adj = [ m[ 5] * m[10] * m[15]
 		            - m[ 5] * m[14] * m[11]
 		            - m[ 6] * m[ 9] * m[15]
 		            + m[ 6] * m[13] * m[11]
@@ -321,21 +321,17 @@ export class Mat4 extends Mat {
 	}
 	
 	static _valFromMat3(m) {
-		let val = [];
-		for(let i = 0; i < Mat3.n; i++) {
-			val = val.concat(m.arrayCol(i));
-			val.push(0);
-		}
+		const val = [];
+		for(let i = 0; i < Mat3.n; i++)
+			val.push(...m.arrayCol(i), 0);
 		val.push(0, 0, 0, 1);
 		return val;
 	}
 	
 	static _valFromMat2(m) {
-		let val = [];
-		for(let i = 0; i < Mat2.n; i++) {
-			val = val.concat(m.arrayCol(i));
-			val.push(0, 0);
-		}
+		const val = [];
+		for(let i = 0; i < Mat2.n; i++)
+			val.push(...m.arrayCol(i), 0, 0);
 		val.push(0, 0, 1, 0, 0, 0, 0, 1);
 		return val;
 	}

@@ -22,9 +22,9 @@ export class Mat extends AbstractMat {
 	 */
 	constructor(...val) {
 		super(...val);
-		let n = this.constructor.n;
+		const n = this.constructor.n;
 		if(this.val.length == 1) {
-			let v = this.val[0];
+			const v = this.val[0];
 			this._val = new Array(this.constructor.n**2).fill(0);
 			for(let i = 0; i < n; i++)
 				this.val[i*(n+1)] = v;
@@ -41,8 +41,8 @@ export class Mat extends AbstractMat {
 	
 	/* Return the transposed matrix */
 	transposed() {
-		let n = this.constructor.n;
-		let t = new Array(n**2);
+		const n = this.constructor.n;
+		const t = new Array(n**2);
 		for(let i = 0; i < n; i++)
 			for(let j = 0; j < n; j++)
 				t[i*n + j] = this.val[i + j*n];
@@ -51,11 +51,11 @@ export class Mat extends AbstractMat {
 	
 	/* Return the inverse matrix */
 	inverse() {
-		let n = this.constructor.n;
-		let adj = this.adjugate();
+		const n = this.constructor.n;
+		const adj = this.adjugate();
 		if(!this.det)
 			throw new Error("Matrix is not invertible");
-		let idet = 1. / this.det;
+		const idet = 1. / this.det;
 		for(let i = 0; i < n**2; i++)
 			adj._val[i] = adj.val[i] * idet;
 		return adj;
@@ -67,7 +67,7 @@ export class Mat extends AbstractMat {
 	/* Trace of the matrix */
 	get trace() {
 		if(this._trace == null) {
-			let n = this.constructor.n;
+			const n = this.constructor.n;
 			this._trace = 0;
 			for(let i = 0; i < n; i++)
 				this._trace += this.val[i*(n+1)];
@@ -83,7 +83,7 @@ export class Mat extends AbstractMat {
 	
 	/* Return the `i`th column as an array */
 	arrayCol(i) {
-		let n = this.constructor.n;
+		const n = this.constructor.n;
 		if(i >= n)
 			throw new RangeError("Invalid column index for " + this.constructor.name);
 		return this.val.slice(i*n, (i+1)*n);
@@ -99,7 +99,7 @@ export class Mat extends AbstractMat {
 	
 	/* String representation of the matrix, row major order */
 	toString() {
-		let n = this.constructor.n;
+		const n = this.constructor.n;
 		let str = "[";
 		for(let i = 0; i < n; i++) {
 			if(i) str += "\n ";
@@ -114,8 +114,8 @@ export class Mat extends AbstractMat {
 	
 	/* Internal matrix product method, return the resulting matrix */
 	_mulm(m) {
-		let n = this.constructor.n;
-		let mult = new Array(n**2).fill(0);
+		const n = this.constructor.n;
+		const mult = new Array(n**2).fill(0);
 		for(let i = 0; i < n; i++) {
 			let r = i * n;
 			for(let j = 0; j < n; j++)
@@ -127,8 +127,8 @@ export class Mat extends AbstractMat {
 	
 	/* Internal matrix per vector method, return the resulting vector */
 	_mulv(v) {
-		let n = this.constructor.n;
-		let mult = new Array(n).fill(0);
+		const n = this.constructor.n;
+		const mult = new Array(n).fill(0);
 		for(let i = 0; i < n; i++)
 			for(let j = 0; j < n; j++)
 				mult[i] += this.val[i + j*n] * v.val[j];
