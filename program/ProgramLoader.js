@@ -1,4 +1,4 @@
-import {loadFile} from "../utils.js";
+import {loadFile} from "../index.js";
 import {ProgramWrapper} from "./index.js";
 
 /*

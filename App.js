@@ -36,7 +36,7 @@ export class App {
 	 * If time step is non zero, when draw is called
 	 * lag is the residual time of the frame
 	 * lower than the time step hence not updated.
-	 * If time step is variable (`timeStep` == 0)
+	 * If time step is variable (`timeStep == 0`)
 	 * when draw is called lag is always 0.
 	 */
 	get lag() {
@@ -115,7 +115,7 @@ export class App {
 	 * otherwise it is called every frame
 	 * with a variable time step.
 	 *
-	 * dt : time elapsed since last update
+	 * `dt` : time elapsed since last update
 	 */
 	update(dt) {}
 	
