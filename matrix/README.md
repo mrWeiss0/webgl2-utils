@@ -46,6 +46,8 @@ helper methods for subclasses.
 | :----- | :---------- |
 | `static get identity()` | Identity matrix |
 | `constructor(...val)` | Create a matrix with the given values, similar to GLSL matN constructor. Values can be a column major list of scalars, vectors or arrays, or another matrix.<br> If another matrix is given the values are copied to the output; any values not filled in are copied from the identity matrix.<br> Passing a single value creates a diagonal matrix. |
+| `get(i, j)` | Get the element at column i and row j |
+| `set(i, j, v)` | Get the element at column i and row j to value v |
 | `get trace()` | Trace of the matrix |
 | `get det()` | Determinant of the matrix |
 | `col(i)` | Return the _i_-th column as a VecN |
@@ -111,8 +113,18 @@ helper methods for subclasses.
 | method | description |
 | :----- | :---------- |
 | `constructor(...val)` | Create a vector with the given values, similar to GLSL matN constructor. Values can be a list of scalars, vectors or arrays.<br> A single value creates a vector filled with that value. |
+| `get(i)` | Get the i-th element of the vector |
+| `set(i, v)` | Set the i-th element of the vector |
+| `get x()`<br> `get r()`<br> `get s()` | Get the first element of the vector |
+| `set x(v)`<br> `set r(v)`<br> `set s(v)` | Set the first element of the vector |
+| `get y()`<br> `get g()`<br> `get t()` | Get the second element of the vector |
+| `set y(v)`<br> `set g(v)`<br> `set t(v)` | Set the second element of the vector |
+| `get z()`<br> `get b()`<br> `get p()` | Get the third element of the vector |
+| `set z(v)`<br> `set b(v)`<br> `set p(v)` | Set the third element of the vector |
+| `get w()`<br> `get a()`<br> `get q()` | Get the fourth element of the vector |
+| `set w(v)`<br> `set a(v)`<br> `set q(v)` | Set the fourth element of the vector |
 | `get modulo()` | Modulo of the vector |
-| `normalize()` | Return a new vector obtained normalizing the current vector |
+| `normalized()` | Return a new vector obtained normalizing the current vector |
 | `toString()` | String representation of the vector |
 
 `class Vec2 extends Vec`

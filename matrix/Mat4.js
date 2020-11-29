@@ -166,10 +166,10 @@ export class Mat4 extends Mat {
 		if(Array.isArray(c)) c = new Vec3(c);
 		if(Array.isArray(o)) o = new Vec3(o);
 		if(Array.isArray(upv)) upv = new Vec3(upv);
-		let vz = c.sub(o).normalize();
+		let vz = c.sub(o).normalized();
 		if(!vz.modulo)
 			vz = new Vec3(0, 0, 1);
-		let vx = upv.cross(vz).normalize();
+		let vx = upv.cross(vz).normalized();
 		if(!vx.modulo)
 			vx = new Vec3(1, 0, 0);
 		const vy = vz.cross(vx);

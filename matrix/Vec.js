@@ -22,6 +22,126 @@ export class Vec extends AbstractMat {
 			throw new Error("Too few components to create " + this.constructor.name);
 		else if(this.val.length > this.constructor.n)
 			throw new Error("Too many components to create " + this.constructor.name);
+		this._modulo = null;
+	}
+	
+	/* Get the i-th element of the vector */
+	get(i) {
+		if(i < 0 || i >= this.constructor.n)
+			throw new Error("Invalid index for " + this.constructor.name);
+		return this._val[i];
+	}
+	
+	/* Set the i-th element of the vector */
+	set(i, v) {
+		if(i < 0 || i >= this.constructor.n)
+			throw new Error("Invalid index for " + this.constructor.name);
+		this._val[i] = +v;
+		this._modulo = null;
+	}
+	
+	/* Get the first element of the vector */
+	get x() {
+		return this.get(0);
+	}
+	
+	get r() {
+		return this.get(0);
+	}
+	
+	get s() {
+		return this.get(0);
+	}
+	
+	/* Set the first element of the vector */
+	set x(v) {
+		this.set(0, v);
+	}
+	
+	set r(v) {
+		this.set(0, v);
+	}
+	
+	set s(v) {
+		this.set(0, v);
+	}
+	
+	/* Get the second element of the vector */
+	get y() {
+		return this.get(1);
+	}
+	
+	get g() {
+		return this.get(1);
+	}
+	
+	get t() {
+		return this.get(1);
+	}
+	
+	/* Set the second element of the vector */
+	set y(v) {
+		this.set(1, v);
+	}
+	
+	set g(v) {
+		this.set(1, v);
+	}
+	
+	set t(v) {
+		this.set(1, v);
+	}
+	
+	/* Get the third element of the vector */
+	get z() {
+		return this.get(2);
+	}
+	
+	get b() {
+		return this.get(2);
+	}
+	
+	get p() {
+		return this.get(2);
+	}
+	
+	/* Set the third element of the vector */
+	set z(v) {
+		this.set(2, v);
+	}
+	
+	set b(v) {
+		this.set(2, v);
+	}
+	
+	set p(v) {
+		this.set(2, v);
+	}
+	
+	/* Get the fourth element of the vector */
+	get w() {
+		return this.get(3);
+	}
+	
+	get a() {
+		return this.get(3);
+	}
+	
+	get q() {
+		return this.get(3);
+	}
+	
+	/* Set the fourth element of the vector */
+	set w(v) {
+		this.set(3, v);
+	}
+	
+	set a(v) {
+		this.set(3, v);
+	}
+	
+	set q(v) {
+		this.set(3, v);
 	}
 	
 	/* Modulo of the vector */
@@ -32,7 +152,7 @@ export class Vec extends AbstractMat {
 	}
 	
 	/* Return a new vector obtained normalizing the current vector */
-	normalize() {
+	normalized() {
 		const m = this.modulo;
 		if(m == 0 || m == 1)
 			return this;

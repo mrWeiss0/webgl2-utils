@@ -32,11 +32,32 @@ export class Mat extends AbstractMat {
 			throw new Error("Too few components to create " + this.constructor.name);
 		else if(this.val.length > this.constructor.n**2)
 			throw new Error("Too many components to create " + this.constructor.name);
+		this._det = null;
+		this._trace = null;
 	}
 	
 	/* Identity matrix */
 	static get identity() {
 		return new this(1);
+	}
+	
+	/* Get the element at column i and row j */
+	get(i, j) {
+		const n = this.constructor.n;
+		if(i < 0 || i >= n || j < 0 || j >= n)
+			throw new RangeError("Invalid index for " + this.constructor.name);
+		return this._val[i*n + j];
+	}
+	
+	/* Set the element at column i and row j to value v */
+	set(i, j, v) {
+		const n = this.constructor.n;
+		if(i < 0 || i >= n || j < 0 || j >= n)
+			throw new RangeError("Invalid index for " + this.constructor.name);
+		this._val[i*n + j] = +v;
+		this._det = null;
+		if(i == j)
+			this._trace = null;
 	}
 	
 	/* Return the transposed matrix */
@@ -84,7 +105,7 @@ export class Mat extends AbstractMat {
 	/* Return the `i`th column as an array */
 	arrayCol(i) {
 		const n = this.constructor.n;
-		if(i >= n)
+		if(i < 0 || i >= n)
 			throw new RangeError("Invalid column index for " + this.constructor.name);
 		return this.val.slice(i*n, (i+1)*n);
 	}
