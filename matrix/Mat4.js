@@ -1,4 +1,4 @@
-import {Mat, Mat2, Mat3, Vec3, Vec4} from "./index.js";
+import {Mat, Mat2, Mat3, Vec2, Vec3, Vec4} from "./index.js";
 
 /*
  * 4x4 matrix class.
@@ -39,7 +39,13 @@ export class Mat4 extends Mat {
 
 	/* 3D translation around X axis */
 	static rotX(a) {
-		const [c, s] = [Math.cos(a), Math.sin(a)];
+		let c, s;
+		if(Array.isArray(a))
+			a = new Vec2(a);
+		if(a instanceof Vec2)
+			[c, s] = a.modulo ? a.val : [1, 0];
+		else
+			[c, s] = [Math.cos(a), Math.sin(a)];
 		return new this(  1,  0,  0, 0,
 		                  0,  c,  s, 0,
 		                  0, -s,  c, 0,
@@ -48,7 +54,13 @@ export class Mat4 extends Mat {
 
 	/* 3D translation around Y axis */
 	static rotY(a) {
-		const [c, s] = [Math.cos(a), Math.sin(a)];
+		let c, s;
+		if(Array.isArray(a))
+			a = new Vec2(a);
+		if(a instanceof Vec2)
+			[c, s] = a.modulo ? a.val : [1, 0];
+		else
+			[c, s] = [Math.cos(a), Math.sin(a)];
 		return new this(  c,  0, -s, 0,
 		                  0,  1,  0, 0,
 		                  s,  0,  c, 0,
@@ -57,7 +69,13 @@ export class Mat4 extends Mat {
 
 	/* 3D translation around Z axis */
 	static rotZ(a) {
-		const [c, s] = [Math.cos(a), Math.sin(a)];
+		let c, s;
+		if(Array.isArray(a))
+			a = new Vec2(a);
+		if(a instanceof Vec2)
+			[c, s] = a.modulo ? a.val : [1, 0];
+		else
+			[c, s] = [Math.cos(a), Math.sin(a)];
 		return new this(  c,  s,  0, 0,
 		                 -s,  c,  0, 0,
 		                  0,  0,  1, 0,
