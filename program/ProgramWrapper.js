@@ -28,13 +28,18 @@ export class ProgramWrapper {
 	get name() {
 		return this._name;
 	}
+
+	/* Use this program for rendering */
+	use() {
+		this._glContext.useProgram(this._glProgram);
+	}
 	
 	/*
 	 * Return an object for the requested attribute name
 	 * containing the properties location, size and type
 	 */
 	getAttribute(name) {
-		return this._attributes.get(name);
+		return this._attributes.get(name) || {location: -1};
 	}
 	
 	/*
@@ -42,7 +47,7 @@ export class ProgramWrapper {
 	 * containing the properties location, size and type
 	 */
 	getUniform(name) {
-		return this._uniforms.get(name);
+		return this._uniforms.get(name) || {location: -1};
 	}
 	
 	/*

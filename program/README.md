@@ -17,6 +17,7 @@ and stores its attributes and uniforms
 | `get glContext()` | Get the webgl context associated with the program |
 | `get glProgram()` | Get the WebGLProgram instance referenced by this object |	
 | `get name()` | Get the name of this program |
+| `use()` | Use this program for rendering |
 | `getAttribute(name)` | Return an object for the requested attribute name containing the properties location, size and type |	
 | `getUniform(name)` | Return an object for the requested uniform name containing the properties location, size and type |	
 | `queryAttributes()` | Query the GPU for all the attributes of the current program and stores the data |

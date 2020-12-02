@@ -61,11 +61,6 @@ export class App {
 		return this._programs.get(name);
 	}
 	
-	/* Use for the rendering context the program with the given name */
-	useProgram(name) {
-		this.glContext.useProgram(this.getProgram(name).glProgram);
-	};
-	
 	/* Create a ProgramLoader instance for the current app */
 	getProgramLoader() {
 		return new ProgramLoader(this);

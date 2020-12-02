@@ -30,7 +30,6 @@ Subclasses must implement update() and draw() methods
 | `get timeStep()` | Get the time step |
 | `set timeStep(dt)` | Set the time step to a non negative value |
 | `getProgram(name)` | Get the instance of ProgramWrapper from the name |
-| `useProgram(name)` | Use for the rendering context the program with the given name |
 | `getProgramLoader()` | Create a ProgramLoader instance for the current app |
 | `initMouse()` | Initialize the mouse event listener for the current canvas |
 | `get mouse()` | Get the mouse event handler if present |
