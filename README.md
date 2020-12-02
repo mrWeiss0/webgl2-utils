@@ -9,6 +9,7 @@
 | class |
 | :---- |
 | [`App`](#class-app) |
+| [`LinkedList`](#class-linkedlist) |
 
 | function | description |
 | :----- | :---------- |
@@ -39,3 +40,15 @@ Subclasses must implement update() and draw() methods
 | `stop()` | Stop the loop |
 | `update(dt)` | Logic update function<br> Called every `timeStep` milliseconds with fixed time step if it is non zero, otherwise it is called every frame with a variable time step.<br><br> `dt` : time elapsed since last update |
 | `draw()` | Rendering function called once per frame |
+
+`class LinkedList`
+-------------------
+
+Simple linked list node class
+with next node accessor
+and iterator method
+
+| `constructor()` | Create an unlinked node |
+| `get next()` | Get the next node in the list |
+| `set next(node)` | Set the next node in the list |
+| `[Symbol.iterator]` | Iterate over the elements following this in the list |

@@ -1,4 +1,5 @@
 export {App} from "./App.js"
+export {LinkedList} from "./LinkedList.js"
 export {loadFile} from "./utils.js"
 export * as event from "./event/index.js"
 export * as matrix from "./matrix/index.js"
