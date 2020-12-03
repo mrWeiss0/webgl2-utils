@@ -8,7 +8,7 @@ export class ProgramLoader {
 	/* Create an instance that references the given app */
 	constructor(app) {
 		this.app      = app;
-		this.shader   = new Map();
+		this.shaders  = new Map();
 		this.programs = [];
 	}
 	
@@ -20,12 +20,12 @@ export class ProgramLoader {
 	async loadShader(url, type, name=url) {
 		this._checkShaderName(name);
 		// Lock shader name
-		this.shader.set(name, null);
+		this.shaders.set(name, null);
 		try {
 			const src = await loadFile(url).then(response => response.text());
 			this._createShaderSource(src, type, name);
 		} catch(e) {
-			this.shader.delete(name);
+			this.shaders.delete(name);
 			throw e;
 		}
 	}
@@ -50,12 +50,12 @@ export class ProgramLoader {
 		const glContext = this.app.glContext;
 		if(this.app._programs.has(name))
 			throw new Error("Program " + name + " already present.");
-		const program = new ProgramWrapper(glContext);
+		const program = new ProgramWrapper(glContext, name);
 		
 		const shaders = new Array(shaderNames.length);
 		for(let i = 0; i < shaderNames.length; i++) {
 			const shaderName = shaderNames[i];
-			const shader = this.shader.get(shaderName);
+			const shader = this.shaders.get(shaderName);
 			if(!shader)
 				throw new Error("Program " + name + ": shader " + shaderName + " does not exist.");
 			shaders[i] = shader;
@@ -77,30 +77,32 @@ export class ProgramLoader {
 	 * calling loadFromObject method
 	 */
 	async loadFromJSON(url) {
-		const json = await loadFile(url).then(response => response.json());
-		this.addProgramsFromObject(json);
+		await loadFile(url)
+		  .then(response => response.json())
+		  .then(json => this.loadFromObject(json));
 	}
 	
 	/*
 	 * Load shaders and programs from an object with the following structure:
 	 * {
-	 *   shaders  : [ {type : "VERTEX_SHADER", url : "vertex.glsl" }, ... ]
+	 *   path     : "path/to/shaders",
+	 *   shaders  : [ { type : "VERTEX_SHADER", url : "vertex.glsl" }, ... ],
 	 *   programs : [ { name : "myProg", shaders : ["vertex.glsl", "fragment.glsl"] }, ... ]
 	 * }
 	 *
 	 * Fails if a shader can't be loaded
 	 */
 	async loadFromObject(obj) {
-		await Promise.all(obj.shaders.map(({url, type}) => this.loadShader(url, type)));
+		await Promise.all(obj.shaders.map(({url, type}) => this.loadShader("./" + obj.path + "/" + url, type, url)));
 		for(const {name, shaders} of obj.programs)
 			this.addProgram(name, shaders);
 	}
 	
 	/* Call deleteShader for every shader previously loaded */
 	deleteShaders() {
-		for(const shader of this.shader.values())
+		for(const shader of this.shaders.values())
 			this.app.glContext.deleteShader(shader);
-		this.shader.clear();
+		this.shaders.clear();
 	}
 	
 	/*
@@ -112,7 +114,7 @@ export class ProgramLoader {
 	checkShaders() {
 		const glContext = this.app.glContext;
 		let errn = 0;
-		for(const [name, shader] of this.shader) {
+		for(const [name, shader] of this.shaders) {
 			const infoLog = glContext.getShaderInfoLog(shader);
 			const error = !glContext.getShaderParameter(shader, glContext.COMPILE_STATUS);
 			if(error)
@@ -182,7 +184,7 @@ export class ProgramLoader {
 	
 	/* Trow an error if the specified shader name is already present in this loader */
 	_checkShaderName(name) {
-		if(this.shader.has(name))
+		if(this.shaders.has(name))
 			throw new Error("Shader " + name + " already present.");
 	}
 	
@@ -199,7 +201,7 @@ export class ProgramLoader {
 			throw new Error("Could not create shader " + name);
 		glContext.shaderSource(shader, src);
 		glContext.compileShader(shader);
-		this.shader.set(name, shader);
+		this.shaders.set(name, shader);
 		return shader;
 	}
 }

@@ -39,7 +39,8 @@ This class loads the shaders and creates the programs
 <td>Load shaders and programs from an object with the following structure:  
 <pre lang="js">
 {
-  shaders  : [ {type : "VERTEX_SHADER", url : "vertex.glsl" }, ... ],
+  path     : "path/to/shaders",
+  shaders  : [ { type : "VERTEX_SHADER", url : "vertex.glsl" }, ... ],
   programs : [ { name : "myProg", shaders : ["vertex.glsl", "fragment.glsl"] }, ... ]
 }
 </pre>
