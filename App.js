@@ -102,6 +102,14 @@ export class App {
 	stop() {
 		this._running = false;
 	}
+
+	/* Resize the canvas */
+	resize(width, height, hdpi=true) {
+		let pixr = hdpi && window.devicePixelRatio || 1;
+		
+		this.canvas.width  = Math.floor(width  * pixr);
+		this.canvas.height = Math.floor(height * pixr);
+	}
 	
 	/*
 	 * Logic update function

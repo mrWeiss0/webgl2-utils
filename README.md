@@ -38,6 +38,7 @@ Subclasses must implement update() and draw() methods
 | `get keyboard()` | Get the keyboard event handler if present |
 | `run()` | Initialize and run the loop |
 | `stop()` | Stop the loop |
+| `resize(width, height, hdpi=true)` | Resize the canvas |
 | `update(dt)` | Logic update function<br> Called every `timeStep` milliseconds with fixed time step if it is non zero, otherwise it is called every frame with a variable time step.<br><br> `dt` : time elapsed since last update |
 | `draw()` | Rendering function called once per frame |
 
