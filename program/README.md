@@ -15,13 +15,16 @@ and stores its attributes and uniforms
 | :----- | :---------- |
 | `constructor(glContext, name)` | Create a webgl program from the given webgl context and sets a name |
 | `get glContext()` | Get the webgl context associated with the program |
-| `get glProgram()` | Get the WebGLProgram instance referenced by this object |	
+| `get glProgram()` | Get the WebGLProgram instance referenced by this object |
 | `get name()` | Get the name of this program |
 | `use()` | Use this program for rendering |
-| `getAttribute(name)` | Return an object for the requested attribute name containing the properties location, size and type |	
-| `getUniform(name)` | Return an object for the requested uniform name containing the properties location, size and type |	
+| `getAttributeLocation(name)` | Return the location for the requested attribute name |
+| `getUniformLocation(name)` | Return the location for the requested uniform name |
+| `getUniformBlockIndex(name)` | Return the index for the requested uniform block name |
+| `uniformBlockBinding(name, index)` | Call `gl.uniformBlockBinding` to bind uniform block to given index |
 | `queryAttributes()` | Query the GPU for all the attributes of the current program and stores the data |
-| `queryUniforms()` | Query the GPU for all the attributes of the current program and stores the data |
+| `queryUniforms()` | Query the GPU for all the uniforms of the current program and stores the data |
+| `queryUniformBlocks()` | Query the GPU for all the uniform blocks of the current program and stores the data |
 
 `class ProgramLoader`
 -------------------

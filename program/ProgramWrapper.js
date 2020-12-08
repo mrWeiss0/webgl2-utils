@@ -12,6 +12,7 @@ export class ProgramWrapper {
 		this._name       = name;
 		this._attributes = new Map();
 		this._uniforms   = new Map();
+		this._uniformBks = new Map();
 	}
 	
 	/* Get the webgl context associated with the program */
@@ -35,52 +36,79 @@ export class ProgramWrapper {
 	}
 	
 	/*
-	 * Return an object for the requested attribute name
-	 * containing the properties location, size and type
+	 * Return the location for the requested attribute name
 	 */
-	getAttribute(name) {
-		return this._attributes.get(name) || {location: -1};
+	getAttributeLocation(name) {
+		const loc = this._attributes.get(name);
+		if(loc == null)
+			return -1;
+		return loc;
 	}
 	
 	/*
-	 * Return an object for the requested uniform name
-	 * containing the properties location, size and type
+	 * Return the location for the requested uniform name
 	 */
-	getUniform(name) {
-		return this._uniforms.get(name) || {location: -1};
+	getUniformLocation(name) {
+		const loc = this._uniforms.get(name);
+		if(loc == null)
+			return -1;
+		return loc;
 	}
-	
+
+	/*
+	 * Return the index for the requested uniform block name
+	 */
+	getUniformBlockIndex(name) {
+		const idx = this._uniformBks.get(name);
+		if(idx == null)
+			return this.glContext.INVALID_INDEX;
+		return idx;
+	}
+
+	/*
+	 * Call gl.uniformBlockBinding to bind uniform block to given index
+	*/
+	uniformBlockBinding(name, index) {
+		const block = this.getUniformBlockIndex(name);
+		this._glContext.uniformBlockBinding(this._glProgram, block, index);
+	}
+
 	/*
 	 * Query the GPU for all the attributes
-	 * of the current program and stores the data
+	 * of the current program and stores their location
 	 */
 	queryAttributes() {
 		const glContext = this._glContext;
 		const n = glContext.getProgramParameter(this.glProgram, glContext.ACTIVE_ATTRIBUTES);
 		for(let i = 0; i < n; i++) {
 			const info = glContext.getActiveAttrib(this.glProgram, i);
-			this._attributes.set(info.name, {
-				location: glContext.getAttribLocation(this.glProgram, info.name),
-				size: info.size,
-				type: info.type
-			});
+			this._attributes.set(info.name, glContext.getAttribLocation(this.glProgram, info.name));
 		}
 	}
 	
 	/*
-	 * Query the GPU for all the attributes
-	 * of the current program and stores the data
+	 * Query the GPU for all the uniforms
+	 * of the current program and stores their location
 	 */
 	queryUniforms() {
 		const glContext = this._glContext;
 		const n = glContext.getProgramParameter(this.glProgram, glContext.ACTIVE_UNIFORMS);
 		for(let i = 0; i < n; i++) {
 			const info = glContext.getActiveUniform(this.glProgram, i);
-			this._uniforms.set(info.name, {
-				location: glContext.getUniformLocation(this.glProgram, info.name),
-				size: info.size,
-				type: info.type
-			});
+			this._uniforms.set(info.name, glContext.getUniformLocation(this.glProgram, info.name));
+		}
+	}
+	
+	/*
+	 * Query the GPU for all the uniform blocks
+	 * of the current program and stores their index
+	 */
+	queryUniformBlocks() {
+		const glContext = this._glContext;
+		const n = glContext.getProgramParameter(this.glProgram, glContext.ACTIVE_UNIFORM_BLOCKS);
+		for(let i = 0; i < n; i++) {
+			const name = glContext.getActiveUniformBlockName(this.glProgram, i);
+			this._uniformBks.set(name, i);
 		}
 	}
 }
