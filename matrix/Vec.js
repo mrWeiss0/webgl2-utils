@@ -185,7 +185,7 @@ export class Vec extends AbstractMat {
 	/* Internal vector dot product method, return the resulting scalar */
 	_mulv(v) {
 		const n = this.constructor.n;
-		const mult = 0;
+		let mult = 0;
 		for(let i = 0; i < n; i++)
 			mult += this.val[i] * v.val[i];
 		return mult;
