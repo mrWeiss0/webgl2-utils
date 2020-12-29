@@ -34,7 +34,7 @@ This class loads the shaders and creates the programs
 <table>
 <tr style="text-align:left;"><th> method </th><th> description </th></tr>
 <tr><td> <code>constructor(app)</code> </td><td> Create an instance that references the given app </td></tr>
-<tr><td> <code>async loadShader(url, type, name=url)</code> </td><td> Create and compile a shader loading the source code from url<br> Fails if the shader name is already taken </td></tr>
+<tr><td> <code>loadShader(url, type, name=url)</code> </td><td> Create and compile a shader loading the source code from url<br> Fails if the shader name is already taken </td></tr>
 <tr><td> <code>addShaderSource(src, type, name)</code> </td><td> Create and compile a shader with the given source code<br> Fails if the shader name is already taken </td></tr>
 <tr><td> <code>addProgram(name, shaderNames)</code> </td><td> Create a program in the app object, attach the shaders with the given names, link the program and detach the sahders.<br> Fails if the specified name is already taken in the app object or if a shader needed is not present </td></tr>
 <tr><td> <code>async loadFromJSON(url)</code> </td><td> Load a json from url and uses it to load shaders and programs. calling loadFromObject method </td></tr>
@@ -43,13 +43,13 @@ This class loads the shaders and creates the programs
 <pre lang="js">
 {
   path     : "path/to/shaders",
-  shaders  : [ { type : "VERTEX_SHADER", url : "vertex.glsl" }, ... ],
+  shaders  : [ { type : "VERTEX_SHADER", file : "vertex.glsl" }, ... ],
   programs : [ { name : "myProg", shaders : ["vertex.glsl", "fragment.glsl"] }, ... ]
 }
 </pre>
-Fails if a shader can't be loaded</td></tr>
-<tr><td> <code>deleteShaders()</code> </td><td> Call deleteShader for every shader previously loaded </td></tr>
-<tr><td> <code>checkShaders()</code> </td><td> Check all shaders for compile errors Log the shader info log in the console. Return the number of compile errors.<br> Useful only for debug </td></tr>
-<tr><td> <code>checkPrograms()</code> </td><td> Check all programs of this loader for link errors Log the program info log in the console. Return the number of link errors.<br> Useful only for debug </td></tr>
-<tr><td> <code>validatePrograms()</code> </td><td> Validate all programs of this loader and check for errors Log the program info log in the console. Return the number of errors.<br> Useful only for debug </td></tr>
+Return a promise that resolves to an array of the programs loaded<br> Fails if a shader can't be loaded</td></tr>
+<tr><td> <code>async deleteShaders()</code> </td><td> Call deleteShader for every shader previously loaded </td></tr>
+<tr><td> <code>async checkShaders()</code> </td><td> Check all shaders for compile errors Log the shader info log in the console. Return the number of compile errors.<br> Useful only for debug </td></tr>
+<tr><td> <code>async checkPrograms()</code> </td><td> Check all programs of this loader for link errors Log the program info log in the console. Return the number of link errors.<br> Useful only for debug </td></tr>
+<tr><td> <code>async validatePrograms()</code> </td><td> Validate all programs of this loader and check for errors Log the program info log in the console. Return the number of errors.<br> Useful only for debug </td></tr>
 </table>
