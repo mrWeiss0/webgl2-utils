@@ -99,7 +99,7 @@ Implements static methods for
 | `static ortho(w, h, n, f)` | Return the orthogonal projection matrix from a camera space looking towards negative z-axis.<br><br> `w`: half width<br> `h`: half height<br> `n`: near plane<br> `f`: far plane |
 | `static persp(w, h, n, f, d = n)` | Return the perspective projection matrix from camera space looking towards negative z-axis.<br><br> `w`: half width  at projection plane<br> `h`: half height at projection plane<br> `n`: near plane<br> `f`: far  plane<br> `d`: projection plane distance |
 | `static perspFOV(fov, a, n, f)` | Return the perspective projection matrix from camera space looking towards negative z-axis, given vertical fov and aspect ratio.<br><br> `fov`: vertical field of view in radians<br> `a`: aspect ratio<br> `n`: near plane<br> `f`: far plane |
-| `static euler(roll, pitch, yaw)` | Return the rotation matrix for the given euler angles for z-up coordinates (XYZ order) |
+| `static euler(angles, order="XYZ")` | Return the rotation matrix for the given euler angles roll, pitch, yaw and the axis order, defaults to z-up coordinates (XYZ order) |
 | `static lookAt(c, o, upv = new Vec3(0, 1, 0))` | Return the transformation matrix for point `c` looking at point `o`.<br> Invert this matrix to get the corresponding view matrix.<br><br> `c`:   source point<br> `o`: look at point<br> `upv`: upvector |
 
 `class Vec extends AbstractMat`

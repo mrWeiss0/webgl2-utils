@@ -162,12 +162,25 @@ export class Mat4 extends Mat {
 	/*
 	 * Return the rotation matrix
 	 * for the given euler angles
-	 * for z-up coordinates (XYZ order)
+	 * roll, pitch, yaw and the
+	 * axis order, defaults to
+	 * z-up coordinates (XYZ order)
 	 */
-	static euler(roll, pitch, yaw) {
-		return this.rotZ(yaw)
-			.mul(this.rotY(pitch))
-			.mul(this.rotX(roll));
+	static euler(angles, order="XYZ") {
+		let mat = this.identity;
+		for(let i = order.length - 1; i >= 0; i--)
+			switch(order[i]) {
+				case "X": case "x":
+					mat = mat.mul(this.rotX(angles[i]));
+				break;
+				case "Y": case "y":
+					mat = mat.mul(this.rotY(angles[i]));
+				break;
+				case "Z": case "z":
+					mat = mat.mul(this.rotZ(angles[i]));
+				break;
+			}
+		return mat;
 	}
 	
 	/*
