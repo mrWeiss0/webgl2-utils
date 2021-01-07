@@ -32,6 +32,7 @@ and is used for method implementations
 | `sub(m)` | Component wise subtraction |
 | `prod(m)` | Component wise product and product per scalar |
 | `mul(m)` | Matrix product of two matrices, matrix per vector, or vector dot product |
+| `[Symbol.iterator]` | Yields the values of the matrix |
 
 `class Mat extends AbstractMat`
 -------------------------------

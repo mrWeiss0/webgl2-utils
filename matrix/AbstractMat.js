@@ -56,4 +56,8 @@ export class AbstractMat {
 	
 	/* Matrix product of two matrices, matrix per vector, or vector dot product */
 	mul() {}
+
+	[Symbol.iterator] = function* () {
+		yield* this._val;
+	}
 }
