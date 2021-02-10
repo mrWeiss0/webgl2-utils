@@ -50,8 +50,6 @@ export class ProgramWrapper {
 	 */
 	getUniformLocation(name) {
 		const loc = this._uniforms.get(name);
-		if(loc == null)
-			return -1;
 		return loc;
 	}
 
