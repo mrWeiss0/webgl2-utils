@@ -22,6 +22,8 @@ export class MouseEventHandler extends EventHandler {
 		this._x = 0;
 		this._y = 0;
 		this._buttons = 0;
+		this._pointerLock = false;
+		this._onpointerlockchange = this._pointerlocklistener.bind(this);
 	}
 	
 	/* The current mouse X coordinate relative to target */
@@ -51,6 +53,24 @@ export class MouseEventHandler extends EventHandler {
 	set hideMenu(hide) {
 		this._hideMenu = !!hide;
 	}
+
+	get pointerLock() {
+		return this._pointerLock;
+	}
+
+	enablePointerLock() {
+		this._pointerLockEnabled = true;
+		document.addEventListener("pointerlockchange", this._onpointerlockchange);
+		document.addEventListener("pointerlockerror", this._onpointerlockerror);
+	}
+
+	disablePointerLock() {
+		this._pointerLockEnabled = false;
+		if(document.pointerLockElement === this.target)
+			document.exitPointerLock();
+		document.removeEventListener("pointerlockchange", this._onpointerlockchange);
+		document.removeEventListener("pointerlockerror", this._onpointerlockerror);
+	}
 	
 	/* Change the css property `cursor` of target */
 	setCursor(cursor) {
@@ -58,6 +78,11 @@ export class MouseEventHandler extends EventHandler {
 	}
 	
 	/* Event listeners */
+
+	click() {
+		if(this._pointerLockEnabled)
+			this.target.requestPointerLock();
+	}
 	
 	mousedown(e) {
 		this._buttons = e.buttons;
@@ -82,5 +107,16 @@ export class MouseEventHandler extends EventHandler {
 	
 	mouseleave(e) {
 		this._buttons = 0;
+	}
+
+	_pointerlocklistener() {
+		if(document.pointerLockElement === this.target)
+			this._pointerLock = true;
+		else
+			this._pointerLock = false;
+	}
+
+	_onpointerlockerror(e) {
+		console.warn("Pointer lock not acquired");
 	}
 }
