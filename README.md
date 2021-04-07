@@ -49,6 +49,8 @@ Simple linked list node class
 with next node accessor
 and iterator method
 
+| method | description |
+| :----- | :---------- |
 | `constructor()` | Create an unlinked node |
 | `get next()` | Get the next node in the list |
 | `set next(node)` | Set the next node in the list |
